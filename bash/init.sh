@@ -1,0 +1,4 @@
+test(){
+  podman machine init
+}
+$@
