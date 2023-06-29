@@ -1,5 +1,7 @@
 # [On Windows](https://podman.io/docs/installation#windows)
-Current LTS 4.1
+Current LTS 4.1. 
+[4.5.1 exe](https://github.com/containers/podman/releases/download/v4.5.1/podman-4.5.1-setup.exe)
+
 - On Windows, each Podman machine is backed by a virtualized Windows System for Linux (WSLv2) distribution.
 - Once installed, the podman command can be run directly from your Windows PowerShell (or CMD) prompt, where it remotely communicates with the podman service running in the WSL environment.
 - Alternatively, you can access Podman directly from the WSL instance if you prefer a Linux prompt and Linux tooling.
