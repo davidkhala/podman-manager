@@ -1,4 +1,2 @@
-test(){
-  podman machine init
-}
-$@
+podman machine init
+podman machine start
