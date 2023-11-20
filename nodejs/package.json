@@ -1,0 +1,24 @@
+{
+  "name": "@davidkhala/podman",
+  "version": "0.0.0",
+  "license": "Apache-2.0",
+  "description": "podman utils",
+  "author": {
+    "name": "David Liu",
+    "email": "david-khala@hotmail.com"
+  },
+  "repository": "davidkhala/podman-manager",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "@davidkhala/container": "latest",
+    "@davidkhala/light": "latest"
+  },
+  "devDependencies": {
+    "mocha": "latest",
+    "@davidkhala/logger": "latest",
+    "eslint": "latest"
+  },
+  "type": "module"
+}

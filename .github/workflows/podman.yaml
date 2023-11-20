@@ -1,0 +1,38 @@
+## "GitHub's Ubuntu action runners come with Podman preinstalled". See in https://github.com/redhat-actions/podman-login
+name: podman
+
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - run: loginctl enable-linger $(whoami)
+      # TODO validating https://github.com/quarckster/blog.misharov.pro/discussions/14#discussioncomment-3556833
+      - run: systemctl restart --user podman
+      - uses: actions/checkout@main
+      - uses: actions/setup-node@main
+        with:
+          check-latest: true
+          node-version: lts/*
+      - run: npm i
+        working-directory: nodejs
+      - run: npm test
+        working-directory: nodejs
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Log in to ghcr.io
+        uses: redhat-actions/podman-login@main
+        with:
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+          registry: ghcr.io/${{ github.repository_owner }}
+
+
+
+
+
