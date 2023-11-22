@@ -10,7 +10,6 @@ jobs:
   node:
     runs-on: ubuntu-latest
     steps:
-      # TODO validating https://github.com/quarckster/blog.misharov.pro/discussions/14#discussioncomment-3556833
       - uses: actions/checkout@main
       - uses: actions/setup-node@main
         with:

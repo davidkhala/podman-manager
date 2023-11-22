@@ -32,6 +32,12 @@ export class ContainerManager extends OCI {
 		return await network.inspect();
 	}
 
+	async volumeCreateIfNotExist({Name}) {
+		return this.client.createVolume({
+			Name, Driver: 'local'
+		});
+	}
+
 	async imagePull(imageName) {
 
 		const onProgress = (event) => {
