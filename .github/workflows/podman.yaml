@@ -42,8 +42,7 @@ jobs:
       - uses: actions/checkout@main
       - run: sudo apt update
       - run: sudo apt install -y qemu-system-x86 gvproxy
-      - run: sudo mv ./github/workflows/qemu-system-x86_64 /usr/bin/qemu-system-x86_64
-      - run: sudo chmod +x /usr/bin/qemu-system-x86_64
+      - run: sudo mv ./.github/workflows/qemu-system-x86_64 /usr/bin/qemu-system-x86_64
       - run: sudo ln -s /usr/bin/gvproxy /usr/libexec/podman/gvproxy
       - run: podman machine rm -f || true # TODO
       - run: podman machine init --user-mode-networking
