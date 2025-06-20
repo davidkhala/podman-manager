@@ -1,6 +1,8 @@
 import {os, uid} from '@davidkhala/light/devOps.js';
 import {ContainerStatus} from '@davidkhala/container/constants.js';
-import {OCI, OCIContainerOptsBuilder} from '@davidkhala/container/oci.js';
+import OCI from '@davidkhala/container/oci.js';
+import OCIContainerOptsBuilder from '@davidkhala/container/options.js';
+import OCIContainer from '@davidkhala/container/container.js';
 
 const {initialized, created, running, exited} = ContainerStatus;
 
@@ -38,29 +40,24 @@ export class ContainerManager extends OCI {
 		});
 	}
 
-	async imagePull(imageName) {
+	async imagePull(name) {
 
 		const onProgress = (event) => {
 			const {status, progressDetail, id} = event;
 			// Podman event
-			this.logger.debug(status, imageName, progressDetail, id);
+			this.logger.debug(status, name, progressDetail, id);
 		};
 
-		return super.imagePull(imageName, onProgress);
+		return this.image.pullIfNotExist(name, onProgress);
 
 	}
 
+
+}
+export class Container extends OCIContainer {
 	_afterCreate() {
 
 		return [initialized, created];
-	}
-
-	_afterStart() {
-		return [running, exited];
-	}
-
-	_beforeKill() {
-		return [running];
 	}
 }
 

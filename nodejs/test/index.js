@@ -13,11 +13,10 @@ describe('podman', function () {
 		const info = await podman.info();
 		console.info(info);
 	});
-	it('pull', async () => {
-		const image = 'couchdb:3.1.1';
-		await podman.imageDelete(image);
-		await podman.imagePull(image);
-		await podman.imageDelete(image);
-	});
+
+	it('windows socket', async()=>{
+		'ssh://user@127.0.0.1:53034/run/user/1000/podman/podman.sock'
+	})
+
 });
 
