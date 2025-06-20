@@ -1,22 +1,27 @@
 import assert from 'assert';
 import {ContainerManager} from '../podman.js';
-import {filedirname} from '@davidkhala/light/es6.mjs';
-
-filedirname(import.meta);
+import {os} from "@davidkhala/light/devOps.js";
 
 describe('podman', function () {
-	this.timeout(0);
-	const podman = new ContainerManager();
-	it('ping', async () => {
-		const ok = await podman.ping();
-		assert.strictEqual(ok, 'OK');
-		const info = await podman.info();
-		console.info(info);
-	});
+    this.timeout(0);
 
-	it('windows socket', async()=>{
-		'ssh://user@127.0.0.1:53034/run/user/1000/podman/podman.sock'
-	})
+    it('ping', async () => {
+        const podman = new ContainerManager();
+        const ok = await podman.ping();
+        assert.strictEqual(ok, 'OK');
+        const info = await podman.info();
+        console.info(info);
+    });
+
+    it('windows socket', async () => {
+        if (os.platform !== 'win32') {
+            return
+        }
+        const socketPath = 'ssh://user@127.0.0.1:53034/run/user/1000/podman/podman.sock'
+        const podman = new ContainerManager(socketPath);
+        const ok = await podman.ping()
+        assert.strictEqual(ok, 'OK');
+    })
 
 });
 
