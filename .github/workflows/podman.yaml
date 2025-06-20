@@ -21,6 +21,7 @@ jobs:
         with:
           check-latest: true
           node-version: lts/*
+      - run: podman machine init --now
       - run: podman context ls
       - run: npm i
       - run: npm test
@@ -33,8 +34,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ github.token }}
           registry: ghcr.io/${{ github.repository_owner }}
-
-
+  setup:
+    runs-on: ubuntu-latest
+    env:
+      QEMU_ACCEL: tcg
+    steps:
+      - uses: actions/checkout@main
+      - run: sudo apt update
+      - run: sudo apt install -y qemu-system-x86 gvproxy
+      - run: sudo mv ./github/workflows/qemu-system-x86_64 /usr/bin/qemu-system-x86_64
+      - run: sudo chmod +x /usr/bin/qemu-system-x86_64
+      - run: sudo ln -s /usr/bin/gvproxy /usr/libexec/podman/gvproxy
+      - run: podman machine rm -f || true # TODO
+      - run: podman machine init --user-mode-networking
+      - run: podman --log-level=debug machine start
+      - run: podman context ls
 
 
 

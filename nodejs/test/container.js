@@ -1,22 +1,18 @@
 import {ContainerOptsBuilder, ContainerManager} from '../podman.js';
 
-async function podman(manager, {HostPort, password}) {
-	const Image = 'postgres';
-	const opts = new ContainerOptsBuilder(Image, ['postgres']);
-
-	opts.setPortBind(`${HostPort}:5432`);
-	opts.setName(Image);
-	opts.setEnv([`POSTGRES_PASSWORD=${password}`]);
-	await manager.containerStart(opts.opts, undefined, true);
-}
-
 describe('podman container start', function () {
-	this.timeout(0);
-	const manager = new ContainerManager();
-	const password = 'password';
-	it('postgre', async () => {
-		await podman(manager, {HostPort: 6432, password});
-		await manager.containerDelete('postgres');
-	});
+    this.timeout(0);
+    const manager = new ContainerManager();
+
+    it('postgre', async () => {
+        const Image = 'postgres';
+        const name = Image
+        const opts = new ContainerOptsBuilder(Image);
+        opts.setPortBind(`${6432}:5432`);
+        opts.name = name;
+        opts.env = [`POSTGRES_PASSWORD=${'password'}`];
+        await manager.containerStart(opts.opts, true);
+        await manager.container.delete(name);
+    });
 
 });

@@ -1,0 +1,27 @@
+#!/bin/bash
+# Save as /usr/bin/qemu-system-x86_64
+
+# Remove any existing -accel or -cpu args from Podman
+args=()
+skip_next=false
+for arg in "$@"; do
+  if $skip_next; then
+    skip_next=false
+    continue
+  fi
+  case "$arg" in
+    -accel|-cpu)
+      skip_next=true
+      continue
+      ;;
+    -accel=*|-cpu=*)
+      continue
+      ;;
+    *)
+      args+=("$arg")
+      ;;
+  esac
+done
+
+# Add our own safe defaults
+exec /usr/bin/qemu-system-x86_64.real -accel tcg -cpu max "${args[@]}"
