@@ -1,4 +1,4 @@
-import {ContainerOptsBuilder, ContainerManager} from '../podman.js';
+import {ContainerOptsBuilder, ContainerManager} from '../index.js';
 
 describe('podman container start', function () {
     this.timeout(0);

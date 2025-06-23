@@ -1,5 +1,4 @@
-import assert from 'assert'
-import {ContainerManager, ContainerOptsBuilder, socketPath} from "../podman.js";
+import {ContainerManager, ContainerOptsBuilder, socketPath} from "../index.js";
 
 
 describe('podman volume', function (){

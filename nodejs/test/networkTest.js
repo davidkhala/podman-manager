@@ -1,4 +1,4 @@
-import {ContainerManager, ContainerOptsBuilder, socketPath} from '../podman.js';
+import {ContainerManager, ContainerOptsBuilder, socketPath} from '../index.js';
 
 describe('podman network', function () {
 	this.timeout(0);

@@ -51,7 +51,9 @@ export class ContainerManager extends OCI {
         return this.image.pullIfNotExist(name, onProgress);
 
     }
-
+    get container(){
+        return new Container(this.client, this.logger);
+    }
 
 }
 
