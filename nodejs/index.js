@@ -4,7 +4,7 @@ import OCI from '@davidkhala/container/oci.js';
 import OCIContainerOptsBuilder from '@davidkhala/container/options.js';
 import OCIContainer from '@davidkhala/container/container.js';
 
-const {initialized, created} = ContainerStatus;
+const {initialized, created, running, exited, stopped} = ContainerStatus;
 
 export const socketPath = () => {
     switch (os.platform) {
@@ -26,6 +26,11 @@ export class ContainerManager extends OCI {
         super(opts, logger);
     }
 
+    /**
+     *
+     * @param Name
+     * @param [rootless]
+     */
     async networkCreate({Name}, rootless) {
         const network = await this.client.createNetwork({
             Name,
@@ -61,6 +66,9 @@ export class Container extends OCIContainer {
     _afterCreate() {
 
         return [initialized, created];
+    }
+    _afterStart() {
+        return [running, exited, stopped];
     }
 }
 

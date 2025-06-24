@@ -10,8 +10,6 @@ describe('podman network', function () {
 		}
 		const info = await podman.networkCreate({Name}, true);
 		console.info(info);
-
-
 	});
 	it('create default', async () => {
 		const info = await podman.networkCreate({Name});
@@ -24,10 +22,10 @@ describe('podman network', function () {
 		const image = 'busybox';
 		await podman.imagePull(image);
 		const containerOptsBuilder = new ContainerOptsBuilder(image, ['sleep', 'infinity']);
-		containerOptsBuilder.setName(containerName);
+		containerOptsBuilder.name = containerName;
 		containerOptsBuilder.setNetwork(Name);
 		await podman.containerStart(containerOptsBuilder.opts);
-		await podman.containerDelete(containerName);
+		await podman.container.delete(containerName);
 
 	});
 	it('duplicate network create', async () => {

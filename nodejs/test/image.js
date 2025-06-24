@@ -2,10 +2,9 @@ import {ContainerManager} from "../index.js";
 
 describe('image', function () {
     this.timeout(0)
-    const socketPath = 'ssh://user@127.0.0.1:53034/run/user/1000/podman/podman.sock'
-    const podman = new ContainerManager(socketPath)
+    const podman = new ContainerManager()
     it('pull', async () => {
-        const image = 'couchdb:3.1.1';
+        const image = 'couchdb';
         await podman.image.pullIfNotExist(image);
         await podman.image.delete(image);
     });

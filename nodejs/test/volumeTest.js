@@ -8,19 +8,17 @@ describe('podman volume', function (){
 	const containerName = 'ubuntuV'
 	const volumeName = 'vol'
 	it('volume create and mount', async () => {
-
-
 		const image = 'ubuntu'
 		await podman.imagePull(image);
-
 		await podman.volumeCreateIfNotExist({Name: volumeName})
+		await podman.container.delete(containerName);
 		const containerOptsBuilder = new ContainerOptsBuilder(image);
 		containerOptsBuilder.setVolume(volumeName, '/web')
-		containerOptsBuilder.setName(containerName)
+		containerOptsBuilder.name = containerName
 		await podman.containerStart(containerOptsBuilder.opts)
 	})
 	after(async ()=>{
-		await podman.containerDelete(containerName);
-		await podman.volumeRemove(volumeName)
+		await podman.container.delete(containerName);
+		await podman.volume.delete(volumeName)
 	})
 })
