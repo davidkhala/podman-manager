@@ -5,7 +5,7 @@ describe('image', function () {
     const podman = new ContainerManager()
     it('pull', async () => {
         const image = 'couchdb';
-        await podman.image.pullIfNotExist(image);
+        await podman.imagePull(image);
         await podman.image.delete(image);
     });
 })

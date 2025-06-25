@@ -1,21 +1,9 @@
-import {os, uid} from '@davidkhala/light/devOps.js';
 import {ContainerStatus} from '@davidkhala/container/constants.js';
 import OCI from '@davidkhala/container/oci.js';
 import OCIContainerOptsBuilder from '@davidkhala/container/options.js';
 import OCIContainer from '@davidkhala/container/container.js';
-import {contexts} from './cmd/linux.js'
 
 const {initialized, created, running, exited, stopped} = ContainerStatus;
-
-export const socketPath = () => {
-    switch (os.platform) {
-        case 'win32':
-            return '\\\\.\\pipe\\docker_engine'; // API forwarding listening on: npipe:////./pipe/docker_engine
-        case 'linux':
-            const defaultCtx = contexts().find(({Default}) => Default === true)
-            return defaultCtx.URI;
-    }
-};
 
 export class ContainerManager extends OCI {
 
