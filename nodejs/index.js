@@ -2,6 +2,7 @@ import {ContainerStatus} from '@davidkhala/container/constants.js';
 import OCI from '@davidkhala/container/oci.js';
 import OCIContainerOptsBuilder from '@davidkhala/container/options.js';
 import OCIContainer from '@davidkhala/container/container.js';
+import {path} from './socket.js'
 
 const {initialized, created, running, exited, stopped} = ContainerStatus;
 
@@ -12,7 +13,7 @@ export class ContainerManager extends OCI {
      * @param {DockerodeOpts} [opts]
      * @param [logger]
      */
-    constructor(opts = {socketPath: socketPath()}, logger) {
+    constructor(opts = {socketPath: path()}, logger) {
         super(opts, logger);
     }
 
@@ -38,11 +39,12 @@ export class ContainerManager extends OCI {
     async imagePull(name) {
 
         const onProgress = (event) => {
-            const {status, progressDetail, id} = event;
-            // Podman event
-            this.logger.debug(status, name, progressDetail, id);
+            const {status, progress, id} = event;
+            this.logger.debug(name, status, id, progress || '');
         };
-
+        if(!name.includes('/')){
+            name = `docker.io/library/${name}`;
+        }
         return this.image.pullIfNotExist(name, onProgress);
 
     }

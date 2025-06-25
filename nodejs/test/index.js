@@ -1,5 +1,6 @@
 import assert from 'assert';
 import {ContainerManager} from '../index.js';
+import {path} from '../socket.js'
 
 describe('podman', function () {
     this.timeout(0);
@@ -11,6 +12,9 @@ describe('podman', function () {
         const info = await podman.info();
         console.info(info);
     });
+    it('test socket', async () => {
+        assert.equal(path(), path(true))
+    })
 
 });
 

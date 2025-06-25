@@ -1,18 +1,23 @@
 import {os, uid} from "@davidkhala/light/devOps.js";
 import {contexts, userServiceStart} from "./cmd/linux.js";
+import {machines} from './cmd/windows.js'
 import * as fs from "node:fs";
 import assert from "assert";
 
 /**
  * get rootless socket
- * @param {boolean} fromMachine from Podman machine
+ * @param {boolean} [fromMachine] from Podman machine
  * @return {string}
  */
 export const path = (fromMachine) => {
     switch (os.platform) {
         case 'win32':
-            `/./pipe/podman-machine-default`// TODO validate AI
-            return '\\\\.\\pipe\\docker_engine'; // API forwarding listening on: npipe:////./pipe/docker_engine
+            if (fromMachine) {
+                return machines()[0].ConnectionInfo.PodmanPipe.Path
+            } else {
+                return '\\\\.\\pipe\\podman-machine-default';
+            }
+
         case 'linux':
             if (fromMachine) {
                 const defaultCtx = contexts().find(({Default}) => Default === true)
