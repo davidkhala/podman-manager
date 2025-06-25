@@ -20,7 +20,6 @@ jobs:
           check-latest: true
           node-version: lts/*
       - uses: davidkhala/setup-podman@main
-      - run: podman context ls
       - run: npm i
       - run: npm test
   release:
