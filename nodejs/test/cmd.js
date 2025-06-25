@@ -1,5 +1,5 @@
-import {context as windowsContext} from '../cmd/windows.js'
-import {context as linuxContext} from '../cmd/linux.js'
+import {contexts as windowsContext} from '../cmd/windows.js'
+import {contexts as linuxContext} from '../cmd/linux.js'
 import {os} from "@davidkhala/light/devOps.js";
 import assert from 'assert'
 describe('podman cli', function () {

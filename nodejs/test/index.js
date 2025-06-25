@@ -1,6 +1,5 @@
 import assert from 'assert';
 import {ContainerManager} from '../index.js';
-import {os} from "@davidkhala/light/devOps.js";
 
 describe('podman', function () {
     this.timeout(0);

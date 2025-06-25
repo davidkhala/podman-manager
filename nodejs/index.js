@@ -3,6 +3,7 @@ import {ContainerStatus} from '@davidkhala/container/constants.js';
 import OCI from '@davidkhala/container/oci.js';
 import OCIContainerOptsBuilder from '@davidkhala/container/options.js';
 import OCIContainer from '@davidkhala/container/container.js';
+import {contexts} from './cmd/linux.js'
 
 const {initialized, created, running, exited, stopped} = ContainerStatus;
 
@@ -11,7 +12,8 @@ export const socketPath = () => {
         case 'win32':
             return '\\\\.\\pipe\\docker_engine'; // API forwarding listening on: npipe:////./pipe/docker_engine
         case 'linux':
-            return `/run/user/${uid}/podman/podman.sock`;
+            const defaultCtx = contexts().find(({Default}) => Default === true)
+            return defaultCtx.URI;
     }
 };
 
@@ -56,7 +58,8 @@ export class ContainerManager extends OCI {
         return this.image.pullIfNotExist(name, onProgress);
 
     }
-    get container(){
+
+    get container() {
         return new Container(this.client, this.logger);
     }
 
@@ -67,6 +70,7 @@ export class Container extends OCIContainer {
 
         return [initialized, created];
     }
+
     _afterStart() {
         return [running, exited, stopped];
     }
