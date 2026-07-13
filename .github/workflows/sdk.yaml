@@ -1,4 +1,4 @@
-name: podman
+name: sdks
 
 on:
   push:
@@ -8,7 +8,7 @@ jobs:
   node:
     strategy:
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ubuntu-latest, windows-latest]
     runs-on: ${{matrix.os}}
     defaults:
       run:
@@ -22,12 +22,3 @@ jobs:
       - uses: davidkhala/setup-podman@main
       - run: npm i
       - run: npm test
-  release:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Log in to ghcr.io
-        uses: redhat-actions/podman-login@main
-        with:
-          username: ${{ github.actor }}
-          password: ${{ github.token }}
-          registry: ghcr.io/${{ github.repository_owner }}

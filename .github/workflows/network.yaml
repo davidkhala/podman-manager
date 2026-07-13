@@ -1,0 +1,14 @@
+name: network
+
+on:
+    push:
+    workflow_dispatch:
+jobs:
+  localhost:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - uses: davidkhala/setup-podman@main
+      - run: podman run -d --name httpbin -p 3000:80 kong/httpbin
+      - run: podman run curlimages/curl curl -s http://host.containers.internal:3000/get
+

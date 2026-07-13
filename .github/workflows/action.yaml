@@ -1,0 +1,16 @@
+name: redhat-actions
+
+on:
+    push:
+    workflow_dispatch:
+
+jobs:
+    release:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Log in to ghcr.io
+              uses: redhat-actions/podman-login@main
+              with:
+                  username: ${{ github.actor }}
+                  password: ${{ github.token }}
+                  registry: ghcr.io/${{ github.repository_owner }}
