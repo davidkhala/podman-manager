@@ -5,3 +5,13 @@ export const userServiceStart = () => execSync('systemctl --user enable --now po
 export const rootServiceStart = () => execSync(`sudo systemctl enable --now podman.socket`)
 export const contexts = () => contextsfmt(execSync(`podman context ls --format '{{json .}}' | jq -s`))
 export const serviceSocket = () => execSync(`podman info --format '{{.Host.RemoteSocket.Path}}'`)
+export const machines = () => {
+    try {
+        return JSON.parse(execSync(`podman machine inspect`))
+    } catch (e) {
+        if (e.stderr?.includes('VM does not exist')) {
+            return []
+        }
+        throw e
+    }
+}

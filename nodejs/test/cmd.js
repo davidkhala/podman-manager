@@ -1,5 +1,5 @@
 import {contexts as windowsContext} from '../cmd/windows.js'
-import {contexts as linuxContext} from '../cmd/linux.js'
+import {contexts as linuxContext, machines as linuxMachines} from '../cmd/linux.js'
 import {os} from "@davidkhala/light/devOps.js";
 import assert from 'assert'
 
@@ -10,11 +10,16 @@ describe('podman cli', function () {
         switch (os.platform) {
             case 'win32':
                 contexts = windowsContext()
+                assert.equal(contexts.length, 2)
                 break
-            case 'linux':
+            case 'linux': {
                 contexts = linuxContext()
+                const machines = linuxMachines()
+                // 每个 podman machine 固定注册 2条 connections（podman-machine-default rootless + podman-machine-default-root
+                assert.equal(contexts.length, machines.length * 2)
+                break
+            }
         }
-        console.debug(contexts)
-        assert.ok([0, 2].includes(contexts.length))
+        console.debug('contexts', contexts)
     })
 })
