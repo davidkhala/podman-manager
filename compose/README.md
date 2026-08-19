@@ -13,7 +13,7 @@ pip3 install https://github.com/containers/podman-compose/archive/devel.tar.gz
 
 os specific
 - on linux as binary
-  - rootful: `curl https://raw.githubusercontent.com/davidkhala/linux-utils/refs/heads/main/apps/podman.sh | bash -s install-compose`
+  - rootful: `curl https://raw.githubusercontent.com/davidkhala/linux-utils/refs/heads/main/apps/podman.sh | sudo bash -s install-compose`
   - rootless: `curl https://raw.githubusercontent.com/davidkhala/linux-utils/refs/heads/main/apps/podman.sh | bash -s install-compose user`
 - on debian: `sudo apt install podman-compose`
 - on centos: `sudo dnf install podman-compose`
