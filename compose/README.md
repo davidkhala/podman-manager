@@ -12,7 +12,8 @@ pip3 install https://github.com/containers/podman-compose/archive/devel.tar.gz
 ```
 
 os specific
-- on linux as binary (deps: python package)
+- on linux as python script (deps: python package)
+  - known issue: `ModuleNotFoundError: No module named 'dotenv'`
   - rootful: `curl https://raw.githubusercontent.com/davidkhala/linux-utils/refs/heads/main/apps/podman.sh | sudo bash -s install-compose`
   - rootless: `curl https://raw.githubusercontent.com/davidkhala/linux-utils/refs/heads/main/apps/podman.sh | bash -s install-compose user`
 - on debian: `sudo apt install podman-compose`
